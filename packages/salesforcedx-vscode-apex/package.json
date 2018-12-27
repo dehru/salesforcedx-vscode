@@ -50,9 +50,10 @@
     "clean":
       "shx rm -rf node_modules && cd out && node ../../../scripts/clean-all-but-jar.js && shx rm -rf coverage && shx rm -rf .nyc_output",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ../../scripts/run-test-with-top-level-extensions",
-    "test:insiders":
-      "cross-env CODE_VERSION=insiders node ../../scripts/run-test-with-top-level-extensions"
+    "test:integration-vscode":
+      "node ../../scripts/run-test-with-top-level-extensions",
+    "test": "npm run test:integration-vscode",
+    "test:insiders": "cross-env CODE_VERSION=insiders npm test"
   },
   "activationEvents": ["workspaceContains:sfdx-project.json"],
   "main": "./out/src",

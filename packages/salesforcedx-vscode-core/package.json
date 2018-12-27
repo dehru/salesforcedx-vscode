@@ -64,10 +64,10 @@
     "clean":
       "shx rm -rf node_modules && shx rm -rf out && shx rm -rf coverage && shx rm -rf .nyc_output",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test":
+    "test:integration-vscode":
       "cross-env CODE_TESTS_WORKSPACE='../system-tests/assets/sfdx-simple' node ./node_modules/vscode/bin/test",
-    "test:insiders":
-      "cross-env CODE_TESTS_WORKSPACE='../system-tests/assets/sfdx-simple' CODE_VERSION=insiders node ./node_modules/vscode/bin/test"
+    "test": "npm run test:integration-vscode",
+    "test:insiders": "cross-env CODE_VERSION=insiders npm run test"
   },
   "activationEvents": [
     "workspaceContains:sfdx-project.json",
