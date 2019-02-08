@@ -79,7 +79,12 @@ import { setDefaultOrg, showDefaultOrg } from './orgPicker';
 import { registerPushOrDeployOnSave, sfdxCoreSettings } from './settings';
 import { taskViewService } from './statuses';
 import { telemetryService } from './telemetry';
-import { getRootWorkspacePath, hasRootWorkspace, isCLIInstalled, showCLINotInstalledMessage } from './util';
+import {
+  getRootWorkspacePath,
+  hasRootWorkspace,
+  isCLIInstalled,
+  showCLINotInstalledMessage
+} from './util';
 
 function registerCommands(
   extensionContext: vscode.ExtensionContext
@@ -393,9 +398,16 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Context
   let sfdxProjectOpened = false;
-  if (hasRootWorkspace()) {
-    const files = await vscode.workspace.findFiles('**/sfdx-project.json');
-    sfdxProjectOpened = files && files.length > 0;
+  // if (hasRootWorkspace()) {
+  //   const files = await vscode.workspace.findFiles('**/sfdx-project.json');
+  //   sfdxProjectOpened = files && files.length > 0;
+
+  if (true) {
+    // @todo Theia hasRootWorkspace() === false due to theia's eager plugin activation, the workspace is not yet populated.
+    const findFiles1 = await vscode.workspace.findFiles('sfdx-project.json'); // @todo Theia - this one works in theia
+    const findFiles2 = await vscode.workspace.findFiles('**/sfdx-project.json'); // @todo Theia - this one works in vscode
+    const files = [...findFiles1, ...findFiles2];
+    sfdxProjectOpened = files.length > 0;
   }
 
   let replayDebuggerExtensionInstalled = false;
@@ -414,10 +426,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Set environment variable to add logging for VSCode API calls
   process.env[SFDX_CLIENT_ENV_VAR] = CLIENT_ID;
-  const config = vscode.workspace.getConfiguration();
+  const config = vscode.workspace.getConfiguration(); // @todo Theia this returns an empty config, also likely due to eager activation.
 
   TERMINAL_INTEGRATED_ENVS.forEach(env => {
-    const section: { [k: string]: any } = config.get(env)!;
+    const section: { [k: string]: any } = config.get(env) || {}; // @todo Theia - protect against environment issues, see .theia/settings.json, eager activation.
     section[SFDX_CLIENT_ENV_VAR] = CLIENT_ID;
     config.update(env, section, ConfigurationTarget.Workspace);
   });

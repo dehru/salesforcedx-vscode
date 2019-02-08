@@ -17,7 +17,11 @@ import {
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { nls } from '../messages';
-import { getRootWorkspace, getRootWorkspacePath, hasRootWorkspace } from '../util';
+import {
+  getRootWorkspace,
+  getRootWorkspacePath,
+  hasRootWorkspace
+} from '../util';
 import {
   CompositeParametersGatherer,
   FileSelection,
@@ -55,9 +59,7 @@ export class AliasGatherer implements ParametersGatherer<Alias> {
   public async gather(): Promise<CancelResponse | ContinueResponse<Alias>> {
     const defaultExpirationdate = DEFAULT_EXPIRATION_DAYS;
     let defaultAlias = DEFAULT_ALIAS;
-    if (
-      hasRootWorkspace()
-    ) {
+    if (hasRootWorkspace()) {
       defaultAlias = getRootWorkspace().name.replace(
         /\W/g /* Replace all non-alphanumeric characters */,
         ''

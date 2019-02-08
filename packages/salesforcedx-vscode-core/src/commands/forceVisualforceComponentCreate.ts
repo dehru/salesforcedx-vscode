@@ -59,11 +59,7 @@ class ForceVisualForceComponentCreateExecutor extends SfdxCommandletExecutor<
 
     execution.processExitSubject.subscribe(async data => {
       this.logMetric(execution.command.logName, startTime);
-      if (
-        data !== undefined &&
-        data.toString() === '0' &&
-        hasRootWorkspace()
-      ) {
+      if (data !== undefined && data.toString() === '0' && hasRootWorkspace()) {
         vscode.workspace
           .openTextDocument(
             path.join(
