@@ -19,7 +19,11 @@ import * as vscode from 'vscode';
 import { channelService } from '../channels';
 import { APEX_CODE_DEBUG_LEVEL, VISUALFORCE_DEBUG_LEVEL } from '../constants';
 import { nls } from '../messages';
+<<<<<<< HEAD
 import { getRootWorkspacePath, OrgAuthInfo } from '../util';
+=======
+import { OrgAuthInfo, getRootWorkspacePath } from '../util';
+>>>>>>> synchronize on workspace utils
 import {
   EmptyParametersGatherer,
   SfdxCommandlet,
@@ -84,7 +88,6 @@ export class ForceStartApexDebugLoggingExecutor extends SfdxCommandletExecutor<{
         resultJson = await this.subExecute(new CreateDebugLevel().build());
         const debugLevelId = resultJson.result.id;
         developerLogTraceFlag.setDebugLevelId(debugLevelId);
-
         const userId = await getUserId(getRootWorkspacePath());
         developerLogTraceFlag.validateDates();
         resultJson = await this.subExecute(new CreateTraceFlag(userId).build());

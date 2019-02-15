@@ -387,7 +387,6 @@ function registerCommands(
     forceConfigSetCmd
   );
 }
-
 export async function activate(context: vscode.ExtensionContext) {
   const extensionHRStart = process.hrtime();
   // Telemetry

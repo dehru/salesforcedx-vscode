@@ -59,7 +59,13 @@ export class AliasGatherer implements ParametersGatherer<Alias> {
   public async gather(): Promise<CancelResponse | ContinueResponse<Alias>> {
     const defaultExpirationdate = DEFAULT_EXPIRATION_DAYS;
     let defaultAlias = DEFAULT_ALIAS;
+<<<<<<< HEAD
     if (hasRootWorkspace()) {
+=======
+    if (
+      hasRootWorkspace()
+    ) {
+>>>>>>> synchronize on workspace utils
       defaultAlias = getRootWorkspace().name.replace(
         /\W/g /* Replace all non-alphanumeric characters */,
         ''

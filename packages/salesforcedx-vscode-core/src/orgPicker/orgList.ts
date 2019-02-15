@@ -161,7 +161,11 @@ export async function showDefaultOrg() {
 
 export async function displayDefaultUsername() {
   let defaultUsernameorAlias: string | undefined;
+<<<<<<< HEAD
   if (hasRootWorkspace()) {
+=======
+  if ( hasRootWorkspace() ) {
+>>>>>>> synchronize on workspace utils
     defaultUsernameorAlias = await OrgAuthInfo.getDefaultUsernameOrAlias(
       getRootWorkspacePath()
     );
@@ -176,7 +180,14 @@ export async function displayDefaultUsername() {
 export async function getDefaultDevHubUsernameorAlias(): Promise<
   string | undefined
 > {
+<<<<<<< HEAD
   if (hasRootWorkspace()) {
     return OrgAuthInfo.getDefaultDevHubUsernameOrAlias(getRootWorkspacePath());
+=======
+  if ( hasRootWorkspace() ) {
+    return OrgAuthInfo.getDefaultDevHubUsernameOrAlias(
+      getRootWorkspacePath()
+    );
+>>>>>>> synchronize on workspace utils
   }
 }

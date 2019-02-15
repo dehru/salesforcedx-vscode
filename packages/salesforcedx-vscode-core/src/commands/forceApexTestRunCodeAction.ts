@@ -21,6 +21,7 @@ import {
   SfdxCommandletExecutor,
   SfdxWorkspaceChecker
 } from './commands';
+import { hasRootWorkspace, getRootWorkspacePath } from '../util';
 
 function isEmpty(value: string): boolean {
   return !value || value.length === 0;
