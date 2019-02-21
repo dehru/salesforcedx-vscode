@@ -26,7 +26,6 @@ import {
   SfdxCommandletExecutor,
   SfdxWorkspaceChecker
 } from './commands';
-import { hasRootWorkspace, getRootWorkspacePath } from '../util';
 
 export enum TestType {
   All,

@@ -23,7 +23,6 @@ import { taskViewService } from '../statuses';
 import { telemetryService } from '../telemetry';
 import { getRootWorkspacePath } from '../util';
 import { SfdxCommandletExecutor } from './commands';
-import { getRootWorkspacePath } from '../util';
 
 export abstract class ForceSourceDeployExecutor extends SfdxCommandletExecutor<
   string

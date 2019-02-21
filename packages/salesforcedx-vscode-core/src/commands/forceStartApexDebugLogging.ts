@@ -19,11 +19,7 @@ import * as vscode from 'vscode';
 import { channelService } from '../channels';
 import { APEX_CODE_DEBUG_LEVEL, VISUALFORCE_DEBUG_LEVEL } from '../constants';
 import { nls } from '../messages';
-<<<<<<< HEAD
 import { getRootWorkspacePath, OrgAuthInfo } from '../util';
-=======
-import { OrgAuthInfo, getRootWorkspacePath } from '../util';
->>>>>>> synchronize on workspace utils
 import {
   EmptyParametersGatherer,
   SfdxCommandlet,
