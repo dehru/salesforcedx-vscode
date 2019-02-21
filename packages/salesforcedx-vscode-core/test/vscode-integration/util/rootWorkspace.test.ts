@@ -56,11 +56,6 @@ describe('RootWorkspace utils should', () => {
   it('return correct parts of the root workspace', () => {
     workspaceStub = stubWorkspace(myWorkspaces);
     expect(getRootWorkspace().name).to.equal(myFolder.name);
-<<<<<<< HEAD
     expect(getRootWorkspacePath()).to.equal(myFolder.uri.fsPath);
-=======
-    expect(getRootWorkspacePath()).to.equal(myFolder.uri.path);
-    expect(getRootWorkspaceFsPath()).to.equal(myFolder.uri.fsPath);
->>>>>>> fix lints
   });
 });
