@@ -79,12 +79,16 @@ import { setDefaultOrg, showDefaultOrg } from './orgPicker';
 import { registerPushOrDeployOnSave, sfdxCoreSettings } from './settings';
 import { taskViewService } from './statuses';
 import { telemetryService } from './telemetry';
+<<<<<<< HEAD
 import {
   getRootWorkspacePath,
   hasRootWorkspace,
   isCLIInstalled,
   showCLINotInstalledMessage
 } from './util';
+=======
+import { hasRootWorkspace } from './util';
+>>>>>>> change some to use fsPath instead of path
 
 function registerCommands(
   extensionContext: vscode.ExtensionContext
@@ -425,10 +429,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Set environment variable to add logging for VSCode API calls
   process.env[SFDX_CLIENT_ENV_VAR] = CLIENT_ID;
-  const config = vscode.workspace.getConfiguration(); // @todo Theia this returns an empty config, also likely due to eager activation.
+  const config = vscode.workspace.getConfiguration();
 
   TERMINAL_INTEGRATED_ENVS.forEach(env => {
-    const section: { [k: string]: any } = config.get(env) || {}; // @todo Theia - protect against environment issues, see .theia/settings.json, eager activation.
+    const section: { [k: string]: any } = config.get(env)!;
     section[SFDX_CLIENT_ENV_VAR] = CLIENT_ID;
     config.update(env, section, ConfigurationTarget.Workspace);
   });
