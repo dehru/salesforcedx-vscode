@@ -90,7 +90,11 @@ describe('SFDX Package Directories', () => {
     let workspaceStub: SinonStub;
 
     beforeEach(() => {
+<<<<<<< HEAD
       workspaceStub = stubRootWorkspace(PROJECT_PATH);
+=======
+      sfdxProjectPathStub = stub(getRootWorkspacePath).returns(PROJECT_PATH);
+>>>>>>> updates to replace SfdxProjectConfig with getRootWorkspacePath
     });
 
     afterEach(() => {

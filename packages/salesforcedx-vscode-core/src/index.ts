@@ -79,16 +79,12 @@ import { setDefaultOrg, showDefaultOrg } from './orgPicker';
 import { registerPushOrDeployOnSave, sfdxCoreSettings } from './settings';
 import { taskViewService } from './statuses';
 import { telemetryService } from './telemetry';
-<<<<<<< HEAD
 import {
   getRootWorkspacePath,
   hasRootWorkspace,
   isCLIInstalled,
   showCLINotInstalledMessage
 } from './util';
-=======
-import { hasRootWorkspace } from './util';
->>>>>>> change some to use fsPath instead of path
 
 function registerCommands(
   extensionContext: vscode.ExtensionContext
