@@ -5,8 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import * as vscode from 'vscode';
 import { ConfigurationTarget } from 'vscode';
+import * as vscode from 'vscode';
 import { channelService } from './channels';
 import {
   CompositeParametersGatherer,
@@ -77,9 +77,9 @@ import { isDemoMode } from './modes/demo-mode';
 import { notificationService, ProgressNotification } from './notifications';
 import { setDefaultOrg, showDefaultOrg } from './orgPicker';
 import { registerPushOrDeployOnSave, sfdxCoreSettings } from './settings';
-import { SfdxProjectPath } from './sfdxProject';
 import { taskViewService } from './statuses';
 import { telemetryService } from './telemetry';
+import { getRootWorkspacePath, hasRootWorkspace, isCLIInstalled, showCLINotInstalledMessage } from './util';
 
 function registerCommands(
   extensionContext: vscode.ExtensionContext
@@ -384,7 +384,6 @@ function registerCommands(
 }
 
 export async function activate(context: vscode.ExtensionContext) {
-  console.log('SFDX CLI Extension Activated');
   const extensionHRStart = process.hrtime();
   // Telemetry
   const machineId =
@@ -394,7 +393,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Context
   let sfdxProjectOpened = false;
-  if (vscode.workspace.rootPath) {
+  if (hasRootWorkspace()) {
     const files = await vscode.workspace.findFiles('**/sfdx-project.json');
     sfdxProjectOpened = files && files.length > 0;
   }
@@ -429,11 +428,16 @@ export async function activate(context: vscode.ExtensionContext) {
     sfdxProjectOpened
   );
 
-  // Set context for defaultusername org
-  await setupWorkspaceOrgType();
-  registerDefaultUsernameWatcher(context);
+  if (isCLIInstalled()) {
+    // Set context for defaultusername org
+    await setupWorkspaceOrgType();
+    registerDefaultUsernameWatcher(context);
 
-  await showDefaultOrg();
+    await showDefaultOrg();
+  } else {
+    showCLINotInstalledMessage();
+    telemetryService.sendError('Salesforce CLI is not installed');
+  }
 
   // Register filewatcher for push or deploy on save
   await registerPushOrDeployOnSave();
@@ -449,19 +453,19 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(treeDataProvider);
 
   // Scratch Org Decorator
-  if (vscode.workspace.rootPath) {
+  if (hasRootWorkspace()) {
     decorators.showOrg();
     decorators.monitorOrgConfigChanges();
   }
 
   // Demo mode Decorator
-  if (vscode.workspace.rootPath && isDemoMode()) {
+  if (hasRootWorkspace() && isDemoMode()) {
     decorators.showDemoMode();
   }
 
   // Refresh SObject definitions if there aren't any faux classes
   if (sfdxCoreSettings.getEnableSObjectRefreshOnStartup()) {
-    initSObjectDefinitions(SfdxProjectPath.getPath()).catch(e =>
+    initSObjectDefinitions(getRootWorkspacePath()).catch(e =>
       telemetryService.sendErrorEvent(e.message, e.stack)
     );
   }
@@ -481,10 +485,12 @@ export async function activate(context: vscode.ExtensionContext) {
     notificationService,
     taskViewService,
     telemetryService,
-    getUserId
+    getUserId,
+    isCLIInstalled
   };
 
   telemetryService.sendExtensionActivationEvent(extensionHRStart);
+  console.log('SFDX CLI Extension Activated');
   return api;
 }
 
