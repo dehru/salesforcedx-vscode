@@ -86,7 +86,6 @@ import {
   showCLINotInstalledMessage
 } from './util';
 
-
 function registerCommands(
   extensionContext: vscode.ExtensionContext
 ): vscode.Disposable {
